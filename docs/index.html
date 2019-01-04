@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Pseudo-LiDAR from Visual Depth Estimation: Bridging the Gap in 3D Object Detection for Autonomous Driving</title>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 style="text-align:center">
+        Pseudo-LiDAR from Visual Depth Estimation: Bridging the Gap in 3D Object Detection for Autonomous Driving</h1>
+    <h5 style="text-align:center" class="text-muted mt-4"> Yan Wang, Wei-Lun Chao, Divyansh Garg, Bharath Hariharan, Mark Campbell, Kilian Weinberger</h5>
+    <h5 style="text-align:center" class="text-muted mt-3">Cornell University, Ithaca, NY </h5>
+</div>
+<div align="center" class="container mt-5">
+    <iframe  width="660" height="355" src="https://www.youtube.com/embed/s9XPwWE8lME" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+<div class="container mt-5">
+    <div class="row">
+    <h2>
+        Abstract:
+    </h2></div>
+    <div class="row">
+    <p class="mt-3">
+        3D object detection is an essential task in autonomous
+driving. Recent techniques excel with highly accurate detection
+rates, provided the 3D input data is obtained from
+precise but expensive LiDAR technology. Approaches based
+on cheaper monocular or stereo imagery data have, until
+now, resulted in drastically lower accuracies — a gap that is
+commonly attributed to poor image-based depth estimation.
+However, in this paper we argue that data representation
+(rather than its quality) accounts for the majority of the difference.
+Taking the inner workings of convolutional neural
+networks into consideration, we propose to convert image-based
+depth maps to pseudo-LiDAR representations — essentially
+mimicking LiDAR signal. With this representation
+we can apply different existing LiDAR-based detection algorithms.
+On the popular KITTI benchmark, our approach
+achieves impressive improvements over the existing state-of-the-art
+in image-based performance — raising the detection
+accuracy of objects within 30m range <span class="text-danger"> from the previous
+state-of-the-art of 22% to an unprecedented 74%</span>. At
+the time of submission our algorithm holds the highest entry
+on the KITTI 3D object detection leaderboard for stereo
+image based approaches.
+    </p></div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <h2>Architecture:</h2>
+    </div>
+    <div class="row">
+        <figure>
+            <img class="img-fluid" src="cvpr2018-pipeline.png">
+        </figure>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <h2>Experiment Results:</h2>
+    </div>
+    <div class="row">
+        <figure>
+        <img class="img-fluid" src="main_result.png">
+
+        </figure>
+    </div>
+    <div class="row">
+        <figure>
+            <img class="img-fluid" src="table1_caption.png">
+        </figure>
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+    <h2>Paper:</h2></div>
+    <div class="row" align="center">
+        <a href="https://arxiv.org/pdf/1812.07179.pdf"><img class="w-75" src="pdf_thumbnail.jpg"></a>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+    <h2>
+        Citation:
+    </h2></div>
+    <pre>
+@article{wang2018pseudo,
+      title={Pseudo-LiDAR from Visual Depth Estimation: Bridging the Gap in 3D Object Detection for Autonomous Driving},
+      author={Wang, Yan and Chao, Wei-Lun and Garg, Divyansh and Hariharan, Bharath and Campbell, Mark and Weinberger, Kilian},
+      journal={arXiv preprint arXiv:1812.07179},
+      year={2018}
+}
+    </pre>
+
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
+
+</body>
+</html>
