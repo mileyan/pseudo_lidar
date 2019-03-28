@@ -1,0 +1,7 @@
+[submodule "avod"]
+	path = avod
+	url = git@github.com:mileyan/avod.git
+
+[submodule "frustum-pointnets"]
+	path = frustum-pointnets
+	url = git@github.com:charlesq34/frustum-pointnets.git
