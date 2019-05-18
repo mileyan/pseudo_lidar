@@ -1,0 +1,1 @@
+Pseudo-LiDAR contains patent-pending technology assigned to Cornell University. This file is a placeholder, and will be replaced with a patent grant for non-commercial use. If you desire to obtain a patent license for commercial use, please contact the authors.
