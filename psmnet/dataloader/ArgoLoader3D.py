@@ -11,7 +11,7 @@ def is_image_file(filename):
     return any(filename.endswith(extension) for extension in IMG_EXTENSIONS)
 
 
-def dataloader(filepath, train_file):
+def dataloader(filepath):
     left_fold  = 'stereo_front_left/'
     right_fold = 'stereo_front_right/'
     disp_fold = 'disparity/'
