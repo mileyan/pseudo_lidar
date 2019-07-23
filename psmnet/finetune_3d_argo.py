@@ -56,9 +56,6 @@ print(os.path.join(args.savemodel, 'training.log'))
 log = logger.setup_logger(os.path.join(args.savemodel, 'training.log'))
 
 all_left_img, all_right_img, all_left_disp, = ls.dataloader(args.datapath)
-print(len(all_left_img))
-print(len(all_right_img))
-print(len(all_left_disp))
 
 TrainImgLoader = torch.utils.data.DataLoader(
     DA.myImageFloder(all_left_img, all_right_img, all_left_disp, True),
@@ -106,9 +103,10 @@ def train(imgL, imgR, disp_L):
         output1 = torch.squeeze(output1, 1)
         output2 = torch.squeeze(output2, 1)
         output3 = torch.squeeze(output3, 1)
-        loss = 0.5 * F.smooth_l1_loss(output1[mask], disp_true[mask], size_average=True) + 0.7 * F.smooth_l1_loss(
-            output2[mask], disp_true[mask], size_average=True) + F.smooth_l1_loss(output3[mask], disp_true[mask],
-                                                                                  size_average=True)
+        loss = 0.5 * F.smooth_l1_loss(output1[mask], disp_true[mask], size_average=True) + \
+               0.7 * F.smooth_l1_loss(output2[mask], disp_true[mask], size_average=True) + \
+                     F.smooth_l1_loss(output3[mask], disp_true[mask], size_average=True)
+
     elif args.model == 'basic':
         output = model(imgL, imgR)
         output = torch.squeeze(output, 1)
@@ -117,8 +115,7 @@ def train(imgL, imgR, disp_L):
     loss.backward()
     optimizer.step()
 
-    #return loss.data[0]
-    return loss.item()
+    return loss.data
 
 
 def test(imgL, imgR, disp_true):
