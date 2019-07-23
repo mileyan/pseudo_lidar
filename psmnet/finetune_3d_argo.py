@@ -15,7 +15,7 @@ from torch.autograd import Variable
 
 import logger
 from dataloader import ArgoLoader3D as ls
-from dataloader import KITTILoader_dataset3d as DA
+from dataloader import Argoloader_dataset3d as DA
 from models import *
 
 parser = argparse.ArgumentParser(description='PSMNet')
