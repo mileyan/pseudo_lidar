@@ -40,7 +40,7 @@ class myImageFloder(data.Dataset):
         right = self.right[index]
         disp_L = self.disp_L[index]
 
-        left_img = self.loader(left) # PIL.Image 
+        left_img = self.loader(left) # PIL.Image (2464,2056)
         right_img = self.loader(right) # PIL.Image
         dataL = self.dploader(disp_L) # np.float32
 
@@ -48,9 +48,22 @@ class myImageFloder(data.Dataset):
         PIL_to_Tensor = torchvision.transforms.ToTensor()
         Tensor_to_PIL = torchvision.transforms.ToPILImage()
 
-        maxpool_left_out = maxpool(PIL_to_Tensor(left_img))
-        back_to_PIL_left = Tensor_to_PIL(maxpool_left_out)
-        print(back_to_PIL_left.size)
+        maxpool_left_out = maxpool(PIL_to_Tensor(left_img)) # Tensor (514,1232)
+        maxpool_right_out = maxpool(PIL_to_Tensor(right_img)) #Tensor (514,1232)
+
+        left_img = Tensor_to_PIL(maxpool_left_out) #PIL.Image (514,1232)
+        right_img = Tensor_to_PIL(maxpool_right_out) #PIL.Image(514,1232)
+
+        print(left_img.size)
+        print(right_img.size)
+
+        print("before = " + str(dataL.shape))
+
+        tensored_dataL = torch.from_numpy(np.expand_dims(dataL, axis=0))
+        tensored_dataL_maxpool = maxpool(tensored_dataL)
+        dataL = tensored_dataL_maxpool.numpy()
+        np.squeeze(dataL, axis=0)
+        print("after = " + str(dataL.shape))
 
         if self.training:
             w, h = left_img.size
