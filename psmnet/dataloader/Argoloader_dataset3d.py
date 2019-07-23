@@ -63,6 +63,7 @@ class myImageFloder(data.Dataset):
         tensored_dataL_maxpool = maxpool(tensored_dataL)
         dataL = tensored_dataL_maxpool.numpy()
         dataL = np.squeeze(dataL, axis=0)
+        dataL = np.swapaxes(dataL,0,1)
         print("after = " + str(dataL.shape))
 
         if self.training:
