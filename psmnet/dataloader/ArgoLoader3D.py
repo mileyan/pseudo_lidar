@@ -18,7 +18,7 @@ def dataloader(filepath):
 
     image_l = [img for img in os.listdir(filepath+left_fold) if img.find('stereo_front_left') > -1]
     image_r = [img for img in os.listdir(filepath+right_fold) if img.find('stereo_front_right') > -1]
-    disp = [npy for npy in os.listdir(filepath+disp_fold) if npy.find('31597') > -1]
+    disp = [npy for npy in os.listdir(filepath+disp_fold) if npy.find('3159') > -1]
 
     left_train  = [filepath+left_fold+img for img in image_l]
     right_train = [filepath+right_fold+img for img in image_r]
