@@ -69,11 +69,10 @@ class myImageFloder(data.Dataset):
         
 
         if self.training:
-            w, h = left_img.size
-            th, tw = 256, 512
-            #th, tw = 0, 0
+            w, h = left_img.size # w = 1232, h = 514
+            th, tw = 128, 512
+            
 
-            '''
             x1 = random.randint(0, w - tw)
             y1 = random.randint(0, h - th)
 
@@ -81,7 +80,7 @@ class myImageFloder(data.Dataset):
             right_img = right_img.crop((x1, y1, x1 + tw, y1 + th))
 
             dataL = dataL[y1:y1 + th, x1:x1 + tw]
-            '''
+            
             processed = preprocess.get_transform(augment=False)
             left_img = processed(left_img)
             right_img = processed(right_img)
