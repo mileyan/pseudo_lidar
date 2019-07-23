@@ -62,12 +62,12 @@ class myImageFloder(data.Dataset):
         tensored_dataL = torch.from_numpy(np.expand_dims(dataL, axis=0))
         tensored_dataL_maxpool = maxpool(tensored_dataL)
         dataL = tensored_dataL_maxpool.numpy()
-        np.squeeze(dataL, axis=0)
+        dataL = np.squeeze(dataL, axis=0)
         print("after = " + str(dataL.shape))
 
         if self.training:
             w, h = left_img.size
-            th, tw = 512, 256
+            th, tw = 256, 512
 
             x1 = random.randint(0, w - tw)
             y1 = random.randint(0, h - th)
