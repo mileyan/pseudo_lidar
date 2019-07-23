@@ -5,6 +5,7 @@ import preprocess
 import torch
 import torch.utils.data as data
 from PIL import Image
+import torchvision.transforms
 
 IMG_EXTENSIONS = [
     '.jpg', '.JPG', '.jpeg', '.JPEG',
@@ -39,13 +40,21 @@ class myImageFloder(data.Dataset):
         right = self.right[index]
         disp_L = self.disp_L[index]
 
-        left_img = self.loader(left)
-        right_img = self.loader(right)
-        dataL = self.dploader(disp_L)
+        left_img = self.loader(left) # PIL.Image 
+        right_img = self.loader(right) # PIL.Image
+        dataL = self.dploader(disp_L) # np.float32
+
+        maxpool = torch.nn.MaxPool2d((4,2), stride=0, padding=0, dilation=1, return_indices=False, ceil_mode=False)
+        PIL_to_Tensor = torchvision.transforms.ToTensor()
+        Tensor_to_PIL = torchvision.transforms.ToPILImage()
+
+        maxpool_left_out = maxpool(PIL_to_Tensor(left_img))
+        back_to_PIL_left = Tensor_to_PIL(maxpool_left_out)
+        print(back_to_PIL_left.size)
 
         if self.training:
             w, h = left_img.size
-            th, tw = 256, 512
+            th, tw = 512, 256
 
             x1 = random.randint(0, w - tw)
             y1 = random.randint(0, h - th)
