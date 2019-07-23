@@ -44,6 +44,11 @@ class myImageFloder(data.Dataset):
         right_img = self.loader(right) # PIL.Image
         dataL = self.dploader(disp_L) # np.float32
 
+        print(left_img.size)
+        print(right_img.size)
+        print(dataL.shape)
+
+        '''
         maxpool = torch.nn.MaxPool2d((4,2), stride=0, padding=0, dilation=1, return_indices=False, ceil_mode=False)
         PIL_to_Tensor = torchvision.transforms.ToTensor()
         Tensor_to_PIL = torchvision.transforms.ToPILImage()
@@ -65,6 +70,7 @@ class myImageFloder(data.Dataset):
         dataL = np.squeeze(dataL, axis=0)
         dataL = np.swapaxes(dataL,0,1)
         print("after = " + str(dataL.shape))
+        '''
 
         if self.training:
             w, h = left_img.size
