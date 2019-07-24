@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import os
 import argparse
 import numpy as np
@@ -65,6 +66,4 @@ if __name__ == '__main__':
             lidar = lidar.astype(np.float32)
             lidar.tofile('{}/{}.ply'.format(pred_lidar_dir, 'Pseudo_PC_' + predix))
             print('Finish Depth {}'.format(predix))  
-
-
 

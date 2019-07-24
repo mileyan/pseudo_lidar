@@ -8,9 +8,9 @@ from argoverse.utils.ply_loader import load_ply
 from argoverse.utils.calibration import Calibration, determine_valid_cam_coords
 from argoverse.utils.camera_stats import get_image_dims_for_camera as get_dim
 
-root_dir =  './'
-subroot_dir = root_dir + 'val/'
-#subroot_dir = root_dir + 'sample/'
+root_dir =  '/data/cmpe297-03-sp19/PilotA/argoverse-api/argoverse-tracking/'
+#subroot_dir = root_dir + 'val/'
+subroot_dir = root_dir + 'sample/'
 argoverse_loader = ArgoverseTrackingLoader(subroot_dir)
 
 print('Total number of logs:',len(argoverse_loader))
