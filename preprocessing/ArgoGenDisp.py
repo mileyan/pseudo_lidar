@@ -55,7 +55,7 @@ for log_id in argoverse_loader.log_list:
         valid_pc = pc[fov_inds, :]        
         valid_uvd = calibL.project_ego_to_cam(valid_pc)
 
-        depth_map = np.zeros((height, width)) - 1
+        depth_map = np.zeros((height, width)) - 2000
 
         for i in range(valid_uv.shape[0]):
             depth_map[int(valid_uv[i, 1]), int(valid_uv[i, 0])] = valid_uvd[i, 2]
