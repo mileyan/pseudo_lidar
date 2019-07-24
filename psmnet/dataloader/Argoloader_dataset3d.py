@@ -5,6 +5,7 @@ import preprocess
 import torch
 import torch.utils.data as data
 from PIL import Image
+import torchvision.transforms
 
 IMG_EXTENSIONS = [
     '.jpg', '.JPG', '.jpeg', '.JPEG',
@@ -39,9 +40,33 @@ class myImageFloder(data.Dataset):
         right = self.right[index]
         disp_L = self.disp_L[index]
 
-        left_img = self.loader(left)
-        right_img = self.loader(right)
-        dataL = self.dploader(disp_L)
+        left_img = self.loader(left) # PIL.Image (2464,2056)
+        right_img = self.loader(right) # PIL.Image
+        dataL = self.dploader(disp_L) # np.float32
+
+        
+        maxpool = torch.nn.MaxPool2d((4,2), stride=0, padding=0, dilation=1, return_indices=False, ceil_mode=False)
+        PIL_to_Tensor = torchvision.transforms.ToTensor()
+        Tensor_to_PIL = torchvision.transforms.ToPILImage()
+
+        maxpool_left_out = maxpool(PIL_to_Tensor(left_img)) # Tensor (514,1232)
+        maxpool_right_out = maxpool(PIL_to_Tensor(right_img)) #Tensor (514,1232)
+
+        left_img = Tensor_to_PIL(maxpool_left_out) #PIL.Image (514,1232)
+        right_img = Tensor_to_PIL(maxpool_right_out) #PIL.Image(514,1232)
+
+        print(left_img.size)
+        print(right_img.size)
+
+        print("before = " + str(dataL.shape))
+
+        tensored_dataL = torch.from_numpy(np.expand_dims(dataL, axis=0))
+        tensored_dataL_maxpool = maxpool(tensored_dataL)
+        dataL = tensored_dataL_maxpool.numpy()
+        dataL = np.squeeze(dataL, axis=0)
+        # dataL = np.swapaxes(dataL,0,1)
+        print("after = " + str(dataL.shape))
+        
 
         #add max pooling here before crop: 
         #pooling ratio is hyper-parameter that can be tuned. so far as 8:1.
