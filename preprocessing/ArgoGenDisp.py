@@ -29,7 +29,7 @@ for log_id in argoverse_loader.log_list:
     calibR = argoverse_data.get_calibration(camR)
     focalX_px = calibL.K[0,0]
     baseline_focal = focalX_px * baseline
-    disparity_dir = subroot_dir + '/' + log_id + '/disparity/' 
+    disparity_dir = subroot_dir + '/' + log_id + '/disparity/'
     if not os.path.isdir(disparity_dir):
         os.makedirs(disparity_dir)
 
