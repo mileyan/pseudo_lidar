@@ -12,8 +12,8 @@ def is_image_file(filename):
 
 
 def dataloader(filepath):
-    left_fold  = 'stereo_front_left/'
-    right_fold = 'stereo_front_right/'
+    left_fold  = 'stereo_left/'
+    right_fold = 'stereo_right/'
     disp_fold = 'disparity/'
 
     image_l = [img for img in os.listdir(filepath+left_fold) if img.find('stereo_front_left') > -1]
