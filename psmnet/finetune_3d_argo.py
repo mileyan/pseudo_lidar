@@ -25,23 +25,23 @@ parser.add_argument('--model', default='stackhourglass',
                     help='select model')
 parser.add_argument('--datatype', default='2015',
                     help='datapath')
-parser.add_argument('--datapath', default='/home/cmpe/PilotA/argoverse-tracking/sample/c6911883-1843-3727-8eaa-41dc8cda8993/',
+parser.add_argument('--datapath', default='/data/cmpe297-03-sp19/PilotA/Argoverse_3d_tracking/argoverse-tracking/',
                     help='datapath')
 parser.add_argument('--epochs', type=int, default=300,
                     help='number of epochs to train')
-parser.add_argument('--loadmodel', default='./trained/submission_model.tar',
+parser.add_argument('--loadmodel', default='./../pretrained_sceneflow.tar',
                     help='load model')
-parser.add_argument('--savemodel', default='./',
+parser.add_argument('--savemodel', default='./finetuemodels/',
                     help='save model')
 parser.add_argument('--no-cuda', action='store_true', default=False,
                     help='enables CUDA training')
 parser.add_argument('--seed', type=int, default=1, metavar='S',
                     help='random seed (default: 1)')
-parser.add_argument('--lr_scale', type=int, default=200, metavar='S',
+parser.add_argument('--lr_scale', type=int, default=50, metavar='S',
                     help='random seed (default: 1)')
 parser.add_argument('--split_file', default='Kitti/object/train.txt',
                     help='save model')
-parser.add_argument('--btrain', type=int, default=4)
+parser.add_argument('--btrain', type=int, default=2)
 parser.add_argument('--start_epoch', type=int, default=1)
 
 args = parser.parse_args()
