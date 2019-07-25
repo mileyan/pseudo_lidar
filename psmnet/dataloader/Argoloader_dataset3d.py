@@ -55,17 +55,17 @@ class myImageFloder(data.Dataset):
         left_img = Tensor_to_PIL(maxpool_left_out) #PIL.Image (514,1232)
         right_img = Tensor_to_PIL(maxpool_right_out) #PIL.Image(514,1232)
 
-        print(left_img.size)
-        print(right_img.size)
+        #print(left_img.size)
+        #print(right_img.size)
 
-        print("before = " + str(dataL.shape))
+        #print("before = " + str(dataL.shape))
 
         tensored_dataL = torch.from_numpy(np.expand_dims(dataL, axis=0))
         tensored_dataL_maxpool = maxpool(tensored_dataL)
         dataL = tensored_dataL_maxpool.numpy()
         dataL = np.squeeze(dataL, axis=0)
         # dataL = np.swapaxes(dataL,0,1)
-        print("after = " + str(dataL.shape))
+        #print("after = " + str(dataL.shape))
         
 
         #add max pooling here before crop: 
