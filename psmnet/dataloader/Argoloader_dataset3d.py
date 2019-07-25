@@ -68,6 +68,10 @@ class myImageFloder(data.Dataset):
         print("after = " + str(dataL.shape))
         
 
+        #add max pooling here before crop: 
+        #pooling ratio is hyper-parameter that can be tuned. so far as 8:1.
+
+
         if self.training:
             w, h = left_img.size # w = 1232, h = 514
             th, tw = 256, 512
@@ -86,6 +90,9 @@ class myImageFloder(data.Dataset):
 
         else:
             w, h = left_img.size
+
+            # need to modify crop size for Argo, so that cropped pic dim is 
+            # divisable by 32.
 
             # left_img = left_img.crop((w - 1232, h - 368, w, h))
             # right_img = right_img.crop((w - 1232, h - 368, w, h))

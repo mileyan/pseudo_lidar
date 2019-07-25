@@ -1,3 +1,4 @@
+
 from __future__ import print_function
 import argparse
 import os
@@ -24,7 +25,7 @@ from models import *
 parser = argparse.ArgumentParser(description='PSMNet')
 parser.add_argument('--KITTI', default='ARGO',
                     help='KITTI version')
-parser.add_argument('--datapath', default='/home/cmpe/PilotA/Argoverse_3d_tracking/argoverse-tracking/train4/',
+parser.add_argument('--datapath', default='/data/cmpe297-03-sp19/PilotA/Argoverse_3d_tracking/argoverse-tracking/train4/',
                     help='select model')
 parser.add_argument('--loadmodel', default=None,
                     help='loading model')
@@ -44,7 +45,7 @@ if args.cuda:
     torch.cuda.manual_seed(args.seed)
 
 if args.KITTI == 'ARGO':
-   from dataloader import ARGOLoader2D as DA
+   from dataloader import ArgoLoader2D as DA
 elif args.KITTI == '2015':
    from dataloader import KITTI_submission_loader as DA
 else:
@@ -75,7 +76,6 @@ def test(imgL,imgR):
         if args.cuda:
            imgL = torch.FloatTensor(imgL).cuda()
            imgR = torch.FloatTensor(imgR).cuda()  
-           print("cuda here")   
 
         imgL, imgR= Variable(imgL), Variable(imgR)
 
@@ -88,45 +88,53 @@ def test(imgL,imgR):
 
 
 def main():
+   if args.cuda:
+       print("cuda available")   
+
    processed = preprocess.get_transform(augment=False)
 
    for inx in range(len(test_left_img)):
 
        imgL_o = (skimage.io.imread(test_left_img[inx]).astype('float32'))
-       print(type(imgL_o[0][0][0]))
        imgR_o = (skimage.io.imread(test_right_img[inx]).astype('float32'))
+       #print('after readin: ', imgL_o.shape)
 
-       imgL_o = skimage.transform.resize(imgL_o, (imgL_o.shape[0] / 2, imgL_o.shape[1] / 4), anti_aliasing=True).astype('float32')
-       imgR_o = skimage.transform.resize(imgR_o, (imgR_o.shape[0] / 2, imgR_o.shape[1] / 4), anti_aliasing=True).astype('float32')
-
-       print(type(imgL_o[0][0][0]))
+#       imgL_o = skimage.transform.resize(imgL_o, (imgL_o.shape[0] / 2, \
+#			imgL_o.shape[1] / 4), anti_aliasing=True).astype('float32')
+#       imgR_o = skimage.transform.resize(imgR_o, (imgR_o.shape[0] / 2, \
+#			imgR_o.shape[1] / 4), anti_aliasing=True).astype('float32')
+	#replace the downsampling with downscaling_local_mean
+       imgL_o = skimage.transform.downscale_local_mean(imgL_o, (4,4,1))
+       imgR_o = skimage.transform.downscale_local_mean(imgR_o, (4,4,1))
+       #print('after downscale: ', imgL_o.shape)
 
        imgL = processed(imgL_o).numpy()
        imgR = processed(imgR_o).numpy()
+       #print('after precessed: ', imgL.shape)
 
        imgL = np.reshape(imgL,[1,3,imgL.shape[1],imgL.shape[2]])
        imgR = np.reshape(imgR,[1,3,imgR.shape[1],imgR.shape[2]])
 
-       print(imgL.shape)
-       print(imgR.shape)
+       #print('after reshape: ', imgL.shape)
 
-       # pad to (1056 , 640)
-       top_pad = 1056-imgL.shape[2]
-       left_pad = 640-imgL.shape[3]
+       # pad to (1056 , 640) for /2, /4 resizing
+       # pad to (544 , 640) for /4, /4 rescaling
+       top_pad = 544-imgL.shape[2]
+       right_pad = 640-imgL.shape[3]
 
-       imgL = np.lib.pad(imgL,((0,0),(0,0),(top_pad,0),(0,left_pad)),mode='constant',constant_values=0)
-       imgR = np.lib.pad(imgR,((0,0),(0,0),(top_pad,0),(0,left_pad)),mode='constant',constant_values=0)
+       imgL = np.lib.pad(imgL,((0,0),(0,0),(top_pad,0),(0,right_pad)),mode='constant',constant_values=0)
+       imgR = np.lib.pad(imgR,((0,0),(0,0),(top_pad,0),(0,right_pad)),mode='constant',constant_values=0)
 
-       print(imgL.shape)
-       print(imgR.shape)
+       #print('after padding: ', imgL.shape)
+
        start_time = time.time()
        pred_disp = test(imgL,imgR)
+       #print('shape of predicted disparity: ',pred_disp.shape)
        print('time = %.2f' %(time.time() - start_time))
 
-       top_pad   = 1056-imgL_o.shape[0]
-       left_pad  = 640-imgL_o.shape[1]
-       img = pred_disp[top_pad:,:-left_pad]
-       skimage.io.imsave(test_left_img[inx].split('/')[-1],(img*256).astype('uint16'))
+       pred_disp = pred_disp[top_pad:,:-right_pad]
+       np.save(, pred_disp)
+       skimage.io.imsave(test_left_img[inx].split('/')[-1],(pred_disp*256).astype('uint16'))
        #skimage.io.imsave(test_left_img[inx].split('/')[-1],(pred_disp*256).astype('uint16'))
 
 if __name__ == '__main__':
