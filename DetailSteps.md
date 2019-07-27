@@ -4,7 +4,8 @@
 ---
 
 <h1 id="pseudo-lidar-on-argoverse-dataset-user-manual">Pseudo-Lidar on Argoverse Dataset User Manual</h1>
-<h2 id="get-the-pseudo-lidar-repository">1. Get the Pseudo-lidar repository</h2>
+<p>This manual details the steps on how to reproduce our work of applying Pseudo-Lidar algorithm to the Argoverse Dataset.</p>
+<h2 id="get-the-pseudo-lidar-repository">1. Get the Pseudo-Lidar repository</h2>
 <p><code>git clone https://github.com/MengshiLi/pseudo_lidar.git</code><br>
 Assume your git folder is $ROOT for the following reference.</p>
 <h2 id="download-the-argoverse-dataset">2. Download the Argoverse Dataset</h2>
@@ -20,62 +21,56 @@ Assume your git folder is $ROOT for the following reference.</p>
 <li>Login to HPC: <code>ssh &lt;SID&gt;@coe-hpc.sjsu.edu</code></li>
 <li>Install virtual environment from this footholder node:</li>
 </ul>
-<pre><code>module load python3/3.7.0
-which python3 #to obtain &lt;absolute-python-path&gt; for python3
-virtualenv --python=&lt;absolute-python-path&gt; venv-3.7-argo
-source ~/venv-3.7-argo/bin/activate
+<pre><code>	module load python3/3.7.0
+	which python3 #to obtain &lt;absolute-python-path&gt; for python3
+	virtualenv --python=&lt;absolute-python-path&gt; venv-3.7-argo
+	source ~/venv-3.7-argo/bin/activate
+	pip install -e &lt;path_to_root_directory_of_the_repo&gt;
 </code></pre>
 <ul>
-<li>From the activated virtualenv:<br>
-<code>pip install -e &lt;path_to_root_directory_of_the_repo&gt;</code></li>
 <li>The work load will be run on the GPU node, but GPU node has no network access, therefore, the env must be setup from the entrance node.</li>
 </ul>
-<h2 id="setup-the-psmnet-virtual-environment">4. Setup the PSMNet virtual environment</h2>
+<h2 id="setup-the-python-virtualenv-for-psmnet">4. Setup the Python virtualenv for PSMNet</h2>
 <ul>
 <li>PSMNet requires python2 and pytorch, therefore, it is better to setup a separate virtualenv.</li>
 <li>Install from the footholder:</li>
 </ul>
-<pre><code>module load cuda/9.2 python2/2.7.15
-which python #to obtain &lt;absolute-python-path&gt; for python2
-virtualenv --python=&lt;absolute-python-path&gt; venv_PSMNet_cuda
-source ~/venv_PSMNet_cuda/bin/activate
-pip install torch torchvision scikit-image
+<pre><code>	module load cuda/9.2 python2/2.7.15
+	which python #to obtain &lt;absolute-python-path&gt; for python2
+	virtualenv --python=&lt;absolute-python-path&gt; venv_PSMNet_cuda
+	source ~/venv_PSMNet_cuda/bin/activate
+	pip install torch torchvision scikit-image
 </code></pre>
-<h2 id="generate-the-groundtruth-disparity-from-lidar">5. Generate the groundtruth disparity from lidar</h2>
-<p>The groundtruth disparity is used to finetuen the PSMNet model.<br>
-Source code for generate disparity: <code>$ROOT/preprocessing/ArgoGenDisp.py</code>.<br>
-Run it from any GPU node. Avoid running any heavy load on the footholder node.</p>
 <ul>
-<li>
-<p>Use screen to avoid task interruption due to shell stall <code>screen</code></p>
-</li>
-<li>
-<p>Obtain the GPU node: <code>srun -p gpu --gres=gpu --pty /bin/bash</code></p>
-</li>
-<li>
-<p>From GPU node, re-activate the python virtual environment for argoverse:</p>
-</li>
+<li>Run from GPU node.</li>
 </ul>
-<pre><code>module load python3/3.7.0
-source ~/venv-3.7-argo/bin/activate
-python $ROOT/preprocessing/ArgoGenDisp.py
+<h2 id="generate-the-groundtruth-disparity-from-lidar">5. Generate the groundtruth disparity from Lidar</h2>
+<p>The groundtruth disparity is used to finetuen the PSMNet model. Source code for generate disparity: <code>$ROOT/preprocessing/ArgoGenDisp.py</code>. Run it from any GPU node. Avoid running any heavy load on the footholder node.</p>
+<ul>
+<li>Use screen to avoid task interruption due to shell stall: <code>screen</code></li>
+<li>Obtain the GPU node: <code>srun -p gpu --gres=gpu --pty /bin/bash</code></li>
+<li>From GPU node, re-activate the Python virtualenv for Argoverse:</li>
+</ul>
+<pre><code>	module load python3/3.7.0
+	source ~/venv-3.7-argo/bin/activate
+	python $ROOT/preprocessing/ArgoGenDisp.py
 </code></pre>
 <ul>
-<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled=""> sean to update the latest source code and usage</li>
+<li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled=""> [TBD] sean to update the latest source code and usage</li>
 </ul>
 <h2 id="train-finetune-the-psmnet-model">6. Train: finetune the PSMNet model</h2>
-<p>Related source code:</p>
+<p>Download the pretrained model: <a href="https://drive.google.com/file/d/1pHWjmhKMG4ffCrpcsp_MTXMJXhgl3kF9/view?usp=sharing">PSMNet on KITTI2015</a>.<br>
+Related source code:</p>
 <ul>
 <li><code>$ROOT/psmnet/dataloader/ArgoLoader3D.py</code></li>
 <li><code>$ROOT/psmnet/dataloader/Argoloader_dataset3d.py</code></li>
 <li><code>$ROOT/psmnet/finetune_3d_argo.py</code></li>
 </ul>
-<p>Download the pretrained model: <a href="https://drive.google.com/file/d/1pHWjmhKMG4ffCrpcsp_MTXMJXhgl3kF9/view?usp=sharing">PSMNet on KITTI2015</a>.<br>
-Launch a GPU node: <code>srun -p gpu --gres=gpu --pty /bin/bash</code><br>
+<p>Launch a GPU node: <code>srun -p gpu --gres=gpu --pty /bin/bash</code><br>
 From GPU:</p>
-<pre><code>module load cuda/9.2 python2/2.7.15
-source ~/venv_PSMNet_cuda/bin/activate
-python $ROOT/psmnet/finetune_3d_argo.py --loadmodel &lt;path to pretrained model&gt;
+<pre><code>	module load cuda/9.2 python2/2.7.15
+	source ~/venv_PSMNet_cuda/bin/activate
+	python $ROOT/psmnet/finetune_3d_argo.py --loadmodel &lt;path to pretrained model&gt;
 </code></pre>
 <h2 id="inference-predict-disparity-from-stereo-image">7. Inference: predict disparity from stereo image</h2>
 <p>Still running on the above virtualenv:</p>
@@ -90,8 +85,8 @@ python $ROOT/psmnet/finetune_3d_argo.py --loadmodel &lt;path to pretrained model
 <p>From GPU node, re-activate the python virtual environment for argoverse:</p>
 </li>
 </ul>
-<pre><code>module load python3/3.7.0
-source ~/venv-3.7-argo/bin/activate
+<pre><code>	module load python3/3.7.0
+	source ~/venv-3.7-argo/bin/activate
 </code></pre>
 <ul>
 <li>Usage:</li>
