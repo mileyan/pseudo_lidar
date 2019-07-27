@@ -31,7 +31,7 @@ parser.add_argument('--epochs', type=int, default=300,
                     help='number of epochs to train')
 parser.add_argument('--loadmodel', default='./../pretrained_sceneflow.tar',
                     help='load model')
-parser.add_argument('--savemodel', default='./finetuemodels/',
+parser.add_argument('--savemodel', default='./finetunemodels/',
                     help='save model')
 parser.add_argument('--no-cuda', action='store_true', default=False,
                     help='enables CUDA training')
@@ -169,6 +169,7 @@ def main():
             print('Iter %d training loss = %.3f , time = %.2f' % (batch_idx, loss, time.time() - start_time))
             total_train_loss += loss
         print('epoch %d total training loss = %.3f' % (epoch, total_train_loss / len(TrainImgLoader)))
+        log.info('epoch %d total training loss = %.3f' % (epoch, total_train_loss / len(TrainImgLoader)))
 
         # SAVE
         if not os.path.isdir(args.savemodel):
