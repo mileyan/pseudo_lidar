@@ -80,8 +80,9 @@ def main():
     sub_dir = args.datapath+ '/' + args.sub_folder
     log_list = [log for log in os.listdir(sub_dir) if log is not None ] 
     for log_id in log_list:
+	print(log_id)
         left_dir = sub_dir + '/' + log_id + '/' + 'stereo_front_left/'
-        right_dir = sub_dir + '/' + log_id + '/' + 'stereo_front_lright/'
+        right_dir = sub_dir + '/' + log_id + '/' + 'stereo_front_right/'
         assert os.path.isdir(left_dir)
         assert os.path.isdir(right_dir)
         
@@ -95,12 +96,12 @@ def main():
             os.makedirs(pred_disp_dir)
     
         for inx in range(len(test_left_img)):
-            if (test_left_img[inx][18:28] != test_right_img[inx][18:28]): # time not equal in seconds!
+            if (test_left_img[inx][18:28] != test_right_img[inx][19:29]): # time not equal in seconds!
                 print('time not synced: ', test_left_img[inx][18:28], '!=', test_right_img[inx][18:28])
                 return -1
                 
-            imgL_o = (skimage.io.imread(test_left_img[inx]).astype('float32'))
-            imgR_o = (skimage.io.imread(test_right_img[inx]).astype('float32'))
+            imgL_o = (skimage.io.imread(left_dir + test_left_img[inx]).astype('float32'))
+            imgR_o = (skimage.io.imread(right_dir + test_right_img[inx]).astype('float32'))
             #print('after readin: ', imgL_o.shape)
 
             #imgL_o = skimage.transform.resize(imgL_o, (imgL_o.shape[0] / 2, \
