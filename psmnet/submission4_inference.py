@@ -2,6 +2,7 @@ from __future__ import print_function
 import argparse
 import os
 import random
+import json
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -18,6 +19,8 @@ import time
 import math
 from utils import preprocess 
 from models import *
+import argoverse
+from argoverse.data_loading.argoverse_tracking_loader import ArgoverseTrackingLoader
 
 parser = argparse.ArgumentParser(description='PSMNet')
 parser.add_argument('--datapath', default='/data/cmpe297-03-sp19/PilotA/Argoverse_3d_tracking/argoverse-tracking/',
@@ -76,7 +79,7 @@ def test(imgL,imgR):
             
 def main():
     assert os.path.isdir(args.datapath)
-    sub_dir = args.root_dir + '/' + args.sub_folder
+    sub_dir = args.datapath+ '/' + args.sub_folder
     
     argoverse_loader = ArgoverseTrackingLoader(sub_dir)
 
@@ -105,7 +108,7 @@ def main():
         for inx in range(len(test_left_img)):
             if (test_left_img[inx][18:28] != test_right_img[inx][18:28]): # time not equal in seconds!
                 print('time not synced: ', test_left_img[inx][18:28], '!=', test_right_img[inx][18:28])
-                return -1s
+                return -1
                 
             imgL_o = (skimage.io.imread(test_left_img[inx]).astype('float32'))
             imgR_o = (skimage.io.imread(test_right_img[inx]).astype('float32'))
