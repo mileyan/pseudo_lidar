@@ -19,8 +19,6 @@ import time
 import math
 from utils import preprocess 
 from models import *
-import argoverse
-from argoverse.data_loading.argoverse_tracking_loader import ArgoverseTrackingLoader
 
 parser = argparse.ArgumentParser(description='PSMNet')
 parser.add_argument('--datapath', default='/data/cmpe297-03-sp19/PilotA/Argoverse_3d_tracking/argoverse-tracking/',
@@ -80,17 +78,8 @@ def test(imgL,imgR):
 def main():
     assert os.path.isdir(args.datapath)
     sub_dir = args.datapath+ '/' + args.sub_folder
-    
-    argoverse_loader = ArgoverseTrackingLoader(sub_dir)
-
-    camL = argoverse_loader.CAMERA_LIST[7] # left stereo
-    camR = argoverse_loader.CAMERA_LIST[8] # right stereo
-    
-    for log_id in argoverse_loader.log_list:
-        argoverse_data = argoverse_loader.get(log_id)
-        calibL = argoverse_data.get_calibration(camL)
-        calibR = argoverse_data.get_calibration(camR)
-
+    log_list = [log for log in os.listdir(sub_dir) if log is not None ] 
+    for log_id in log_list:
         left_dir = sub_dir + '/' + log_id + '/' + 'stereo_front_left/'
         right_dir = sub_dir + '/' + log_id + '/' + 'stereo_front_lright/'
         assert os.path.isdir(left_dir)
