@@ -102,7 +102,7 @@ From GPU:</p>
 <ul>
 <li>Usage:</li>
 </ul>
-<pre><code>python $ROOT/preprocessing/rgoGgen_lidar.py --datapath $DATAPATH --sub_folder train4
+<pre><code>python $ROOT/preprocessing/argo_gen_lidar.py --datapath $DATAPATH --sub_folder train4
 </code></pre>
 <h2 id="apply-pseudo-lidar-to-any-3d-object-detection-model">9. Apply Pseudo-Lidar to any 3D object-detection model</h2>
 
