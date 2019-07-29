@@ -49,7 +49,7 @@ Assume your git folder is $ROOT for the following reference.</p>
 Before running the code below, ensure Argoverse dataset is organized in the following format.</p>
 <pre><code>argoverse-tracking/
 	train1/
-		log_id11/ # unique log identifier  
+	    log_id11/ # unique log identifier  
 	        lidar/ # lidar point cloud file in .PC  
 	        stereo_front_left/ # stereo left image
 	        stereo_front_right/ # stereo right image
