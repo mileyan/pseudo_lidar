@@ -48,8 +48,8 @@ Assume your git folder is $ROOT for the following reference.</p>
 <p>The groundtruth disparity is used to finetuen the PSMNet model. Source code for generate disparity: <code>$ROOT/preprocessing/rgoisp.py</code>. Run it from any GPU node. Avoid running any heavy load on the footholder node.<br>
 Before running the code below, ensure Argoverse dataset is organized in the following format.</p>
 <pre><code>argoverse-tracking/
-	train1/  
-        log_id11/ # unique log identifier  
+	train1/
+		log_id11/ # unique log identifier  
 	        lidar/ # lidar point cloud file in .PC  
 	        stereo_front_left/ # stereo left image
 	        stereo_front_right/ # stereo right image
