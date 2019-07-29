@@ -67,7 +67,7 @@ Before running the code below, ensure Argoverse dataset is organized in the foll
 </ul>
 <pre><code>	module load python3/3.7.0
 	source ~/venv-3.7-argo/bin/activate
-	python $ROOT/preprocessing/argo_gen_disp.py
+	python $ROOT/preprocessing/argo_gen_disp.py --root_dir $DATAPATH
 </code></pre>
 <h2 id="train-finetune-the-psmnet-model">6. Train: finetune the PSMNet model</h2>
 <p>Download the pretrained model: <a href="https://drive.google.com/file/d/1pHWjmhKMG4ffCrpcsp_MTXMJXhgl3kF9/view?usp=sharing">PSMNet on KITTI2015</a>.<br>
