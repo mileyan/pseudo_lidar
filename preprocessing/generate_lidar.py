@@ -47,7 +47,8 @@ if __name__ == '__main__':
         predix = fn[:-4]
         calib_file = '{}/{}.txt'.format(args.calib_dir, predix)
         calib = kitti_util.Calibration(calib_file)
-        disp_map = ssc.imread(args.disparity_dir + '/' + fn) / 256.
+        # disp_map = ssc.imread(args.disparity_dir + '/' + fn) / 256.
+        disp_map = ssc.imread(args.disparity_dir + '/' + fn)
         lidar = project_disp_to_depth(calib, disp_map, args.max_high)
         # pad 1 in the indensity dimension
         lidar = np.concatenate([lidar, np.ones((lidar.shape[0], 1))], 1)

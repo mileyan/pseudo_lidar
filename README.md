@@ -16,6 +16,8 @@ by [Yan Wang](https://www.cs.cornell.edu/~yanwang/), [Wei-Lun Chao](http://www-s
   year={2019}
 }
 ```
+## Update
+* 29th July 2019: `submission.py` will save the disparity to the numpy file, not png file. And fix the `generate_lidar.py`. 
 
 ## Contents
 
@@ -112,15 +114,15 @@ python ./psmnet/submission.py \
 ```angular2html
 # training
 python ./preprocessing/generate_lidar.py  \
-    --calib_path ./KITTI/object/training/calib/ \
-    --save_path ./KITTI/object/training/pseudo-lidar_velodyne/ \
-    --disp_path ./KITTI/object/training/predict_disparity \
+    --calib_dir ./KITTI/object/training/calib/ \
+    --save_dir ./KITTI/object/training/pseudo-lidar_velodyne/ \
+    --disparity_dir ./KITTI/object/training/predict_disparity \
     --max_high 1
 # testing
 python ./preprocessing/generate_lidar.py  \
-    --calib_path ./KITTI/object/testing/calib/ \
-    --save_path ./KITTI/object/testing/pseudo-lidar_velodyne/ \
-    --disp_path ./KITTI/object/testing/predict_disparity \
+    --calib_dir ./KITTI/object/testing/calib/ \
+    --save_dir ./KITTI/object/testing/pseudo-lidar_velodyne/ \
+    --disparity_dir ./KITTI/object/testing/predict_disparity \
     --max_high 1
 ```
 

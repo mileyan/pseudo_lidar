@@ -38,7 +38,7 @@ parser.add_argument('--seed', type=int, default=1, metavar='S',
                     help='random seed (default: 1)')
 parser.add_argument('--save_path', type=str, default='finetune_1000', metavar='S',
                     help='path to save the predict')
-parser.add_argument('--save_float', action='store_true', help='if true, save the numpy file, not the png file')
+parser.add_argument('--save_figure', action='store_true', help='if true, save the numpy file, not the png file')
 args = parser.parse_args()
 args.cuda = not args.no_cuda and torch.cuda.is_available()
 
@@ -116,10 +116,10 @@ def main():
        left_pad  = 1248-imgL_o.shape[1]
        img = pred_disp[top_pad:,:-left_pad]
        print(test_left_img[inx].split('/')[-1])
-       if args.save_float:
-           np.save(args.save_path+'/'+test_left_img[inx].split('/')[-1], img)
-       else:
+       if args.save_figure:
            skimage.io.imsave(args.save_path+'/'+test_left_img[inx].split('/')[-1],(img*256).astype('uint16'))
+       else:
+           np.save(args.save_path+'/'+test_left_img[inx].split('/')[-1], img)
 
 if __name__ == '__main__':
    main()
