@@ -119,7 +119,7 @@ def main():
        if args.save_figure:
            skimage.io.imsave(args.save_path+'/'+test_left_img[inx].split('/')[-1],(img*256).astype('uint16'))
        else:
-           np.save(args.save_path+'/'+test_left_img[inx].split('/')[-1], img)
+           np.save(args.save_path+'/'+test_left_img[inx].split('/')[-1][:-4], img)
 
 if __name__ == '__main__':
    main()

@@ -40,7 +40,7 @@ if __name__ == '__main__':
     if not os.path.isdir(args.save_dir):
         os.makedirs(args.save_dir)
 
-    disps = [x for x in os.listdir(args.disparity_dir) if x[-3:] == 'png']
+    disps = [x for x in os.listdir(args.disparity_dir) if x[-3:] == 'png' or x[-3:] == 'npy']
     disps = sorted(disps)
 
     for fn in disps:
@@ -48,7 +48,8 @@ if __name__ == '__main__':
         calib_file = '{}/{}.txt'.format(args.calib_dir, predix)
         calib = kitti_util.Calibration(calib_file)
         # disp_map = ssc.imread(args.disparity_dir + '/' + fn) / 256.
-        disp_map = ssc.imread(args.disparity_dir + '/' + fn)
+        disp_map = np.load(args.disparity_dir + '/' + predix+'.npy')
+        disp_map = (disp_map*256).astype(np.uint16)/256.
         lidar = project_disp_to_depth(calib, disp_map, args.max_high)
         # pad 1 in the indensity dimension
         lidar = np.concatenate([lidar, np.ones((lidar.shape[0], 1))], 1)
