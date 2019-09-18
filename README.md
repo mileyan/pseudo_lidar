@@ -165,6 +165,9 @@ Follow their README to train the v1 model. You can also download our pretrained 
 The main results on the validation dataset of our pseudo-LiDAR method.
 ![Figure](figures/result.png)
 
+You can download the avod validation results from [HERE](https://drive.google.com/file/d/13nOhBCmj8rzjMHDEw3syROuqHsoxWIKJ/view?usp=sharing).
+
+
 ## Contact
 If you have any question, please feel free to email us.
 
