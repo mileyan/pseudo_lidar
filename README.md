@@ -125,6 +125,7 @@ python ./preprocessing/generate_lidar.py  \
     --disparity_dir ./KITTI/object/testing/predict_disparity \
     --max_high 1
 ```
+If you want to generate point cloud from depth map (like DORN), you can add `--is_depth` in the command.
 
 #### 2.6 Generate ground plane
 If you want to train an [AVOD]( https://github.com/kujason/avod) model for 3D object detection, you need to generate ground planes from pseudo-lidar point clouds.
