@@ -69,6 +69,7 @@ if __name__ == '__main__':
             disp_map = (disp_map*256).astype(np.uint16)/256.
             lidar = project_disp_to_points(calib, disp_map, args.max_high)
         else:
+            disp_map = (disp_map).astype(np.float32)/256.
             lidar = project_depth_to_points(calib, disp_map, args.max_high)
         # pad 1 in the indensity dimension
         lidar = np.concatenate([lidar, np.ones((lidar.shape[0], 1))], 1)
