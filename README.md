@@ -17,6 +17,7 @@ by [Yan Wang](https://www.cs.cornell.edu/~yanwang/), [Wei-Lun Chao](http://www-s
 }
 ```
 ## Update
+* 2nd July 2020: Add a jupyter script to visualize point cloud. It is in ./visualization folder.
 * 29th July 2019: `submission.py` will save the disparity to the numpy file, not png file. And fix the `generate_lidar.py`.
 * I have modifed the official avod a little bit. Now you can directly train and test pseudo-lidar with avod. Please check the code https://github.com/mileyan/avod_pl.
 
